@@ -4,51 +4,90 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Bot KPTM — Pembantu Digital KPTM Bangi</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;450;500;550;600;700&display=swap" rel="stylesheet">
 
+<style>
   :root {
-    --navy: #1B2A5E;
-    --navy-dark: #121d42;
-    --navy-light: #243470;
-    --gold: #C8972B;
-    --gold-light: #e0aa3a;
-    --white: #FFFFFF;
-    --gray-50: #F8F9FC;
-    --gray-100: #EEF0F6;
-    --gray-300: #C5CAD8;
-    --gray-500: #7A82A0;
-    --gray-700: #3D4466;
-    --green-wa: #25D366;
-    --green-wa-dark: #1da851;
-    --shadow-sm: 0 1px 3px rgba(27,42,94,0.08);
-    --shadow-md: 0 4px 16px rgba(27,42,94,0.12);
-    --shadow-lg: 0 8px 32px rgba(27,42,94,0.16);
+    /* Refined palette — deeper, more dimensional */
+    --navy:       #14224F;
+    --navy-deep:  #0B1438;
+    --navy-soft:  #1F2D63;
+    --navy-glow:  #2A3A7A;
+
+    --gold:       #C8972B;
+    --gold-soft:  #D4A847;
+    --gold-deep:  #A37D1F;
+    --gold-glow:  rgba(200,151,43,0.18);
+
+    --cream:      #FAF7F1;
+    --bone:       #F5F1E8;
+
+    --ink:        #1A1F36;
+    --ink-soft:   #424766;
+    --ink-mute:   #7E839B;
+    --ink-faint:  #AFB3C5;
+    --hairline:   #E8E5DC;
+    --paper:      #FFFFFF;
+    --paper-warm: #FDFBF6;
+
+    --green-wa:   #25D366;
+    --green-wa-2: #1DA851;
+
+    /* Sophisticated shadows */
+    --sh-1: 0 1px 2px rgba(20,34,79,0.04), 0 1px 1px rgba(20,34,79,0.03);
+    --sh-2: 0 2px 4px rgba(20,34,79,0.04), 0 4px 12px rgba(20,34,79,0.06);
+    --sh-3: 0 4px 8px rgba(20,34,79,0.06), 0 12px 32px rgba(20,34,79,0.10);
+    --sh-glow: 0 0 0 1px rgba(200,151,43,0.12), 0 8px 40px rgba(11,20,56,0.25);
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
   html { height: 100%; height: -webkit-fill-available; }
 
   body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: linear-gradient(135deg, #0f1a3d 0%, #1B2A5E 50%, #243470 100%);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    background:
+      radial-gradient(ellipse at top left, #1F2D63 0%, transparent 60%),
+      radial-gradient(ellipse at bottom right, #2A3A7A 0%, transparent 60%),
+      linear-gradient(160deg, #0B1438 0%, #14224F 100%);
     min-height: 100vh;
     min-height: -webkit-fill-available;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    color: var(--ink);
   }
 
+  /* Subtle noise + radial glow */
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(200,151,43,0.08) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(200,151,43,0.06) 0%, transparent 50%);
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(circle at 25% 15%, rgba(200,151,43,0.10) 0%, transparent 45%),
+      radial-gradient(circle at 75% 85%, rgba(200,151,43,0.06) 0%, transparent 50%);
     pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Film grain — barely perceptible */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: overlay;
   }
 
   /* ── WRAPPER ── */
@@ -56,348 +95,577 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 480px;
+    max-width: 460px;
     height: 100vh;
     height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
-    background: var(--gray-50);
+    background: var(--paper-warm);
     overflow: hidden;
   }
 
   @media (min-width: 520px) {
-    body { padding: 16px; }
+    body { padding: 20px; }
     .chat-wrapper {
-      height: min(820px, calc(100vh - 32px));
-      border-radius: 24px;
-      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(200,151,43,0.15);
+      height: min(820px, calc(100vh - 40px));
+      border-radius: 28px;
+      box-shadow:
+        0 0 0 0.5px rgba(255,255,255,0.06),
+        0 0 0 1px rgba(200,151,43,0.08),
+        0 24px 80px -20px rgba(0,0,0,0.5),
+        0 8px 32px -4px rgba(11,20,56,0.4);
     }
   }
 
-  /* ── HEADER ── */
+  /* ── HEADER — premium glass over navy ── */
   .chat-header {
-    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
-    padding: 14px 16px 13px;
-    padding-top: max(14px, env(safe-area-inset-top));
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.04), transparent 30%),
+      linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-soft) 100%);
+    padding: 18px 18px 16px;
+    padding-top: max(18px, calc(env(safe-area-inset-top) + 6px));
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 13px;
     position: relative;
     flex-shrink: 0;
-    z-index: 2;
+    z-index: 3;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    overflow: hidden;
   }
 
+  /* Top glass highlight */
+  .chat-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+  }
+
+  /* Bottom hairline gold */
   .chat-header::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    bottom: 0; left: 16px; right: 16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,151,43,0.5) 50%, transparent);
+  }
+
+  /* Decorative glow orb */
+  .header-orb {
+    position: absolute;
+    top: -50px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,151,43,0.12) 0%, transparent 65%);
+    pointer-events: none;
   }
 
   .avatar {
-    width: 44px; height: 44px;
+    width: 46px; height: 46px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700;
-    color: var(--navy);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.18), transparent 50%),
+      linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy-deep);
     flex-shrink: 0;
-    box-shadow: 0 0 0 3px rgba(200,151,43,0.3);
-    position: relative; z-index: 1;
+    position: relative;
+    z-index: 1;
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.5),
+      inset 0 -1px 1px rgba(0,0,0,0.1),
+      0 0 0 2px rgba(200,151,43,0.2),
+      0 4px 12px rgba(200,151,43,0.3);
+    letter-spacing: 0.02em;
   }
 
   .avatar-pulse {
-    position: absolute; inset: -4px;
+    position: absolute; inset: -5px;
     border-radius: 50%;
-    border: 2px solid rgba(200,151,43,0.4);
-    animation: pulse 2s ease-in-out infinite;
+    border: 1.5px solid rgba(200,151,43,0.45);
+    animation: pulse 2.4s ease-in-out infinite;
   }
 
   @keyframes pulse {
-    0%,100% { transform: scale(1); opacity: 0.4; }
-    50%      { transform: scale(1.12); opacity: 0.85; }
+    0%,100% { transform: scale(1);    opacity: 0.5; }
+    50%     { transform: scale(1.14); opacity: 0; }
   }
 
   .header-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
 
   .header-name {
-    font-size: 15px; font-weight: 700;
-    color: var(--white); letter-spacing: 0.01em;
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
 
   .header-sub {
-    font-size: 11px; color: rgba(255,255,255,0.6);
-    margin-top: 2px; display: flex; align-items: center; gap: 5px;
+    font-size: 11px;
+    font-weight: 450;
+    color: rgba(255,255,255,0.62);
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.005em;
   }
 
   .status-dot {
     width: 6px; height: 6px; border-radius: 50%;
-    background: #4ade80; flex-shrink: 0;
-    animation: blink 2s ease-in-out infinite;
+    background: #4ADE80;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(74,222,128,0.7), 0 0 0 2px rgba(74,222,128,0.2);
+    animation: blink 2.4s ease-in-out infinite;
   }
 
   @keyframes blink {
-    0%,100% { opacity: 1; } 50% { opacity: 0.35; }
+    0%,100% { opacity: 1; } 50% { opacity: 0.5; }
   }
 
   .header-badge {
-    background: rgba(200,151,43,0.2);
-    border: 1px solid rgba(200,151,43,0.4);
-    border-radius: 20px; padding: 3px 10px;
-    font-size: 10px; color: var(--gold-light);
-    font-weight: 600; letter-spacing: 0.06em;
-    text-transform: uppercase; flex-shrink: 0;
+    background: rgba(200,151,43,0.14);
+    border: 1px solid rgba(200,151,43,0.32);
+    border-radius: 100px;
+    padding: 4px 9px 3px;
+    font-size: 9.5px;
+    color: var(--gold-soft);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    flex-shrink: 0;
     position: relative; z-index: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
-  /* ── STICKY FAQ BAR ── */
+  /* ── STICKY FAQ BAR — premium ── */
   .faq-bar {
-    background: var(--white);
-    border-bottom: 1.5px solid var(--gray-100);
-    padding: 9px 12px;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-warm) 100%);
+    border-bottom: 1px solid var(--hairline);
+    padding: 10px 14px;
     display: none;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     flex-shrink: 0;
-    /* subtle shadow below to signal stickiness */
-    box-shadow: 0 2px 8px rgba(27,42,94,0.06);
+    box-shadow: 0 4px 12px -8px rgba(20,34,79,0.08);
+    position: relative;
   }
 
   .faq-bar::-webkit-scrollbar { display: none; }
-
   .faq-bar.visible { display: flex; }
 
+  /* Right edge fade for scroll affordance */
+  .faq-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 1px;
+    width: 28px;
+    background: linear-gradient(90deg, transparent, var(--paper-warm));
+    pointer-events: none;
+  }
+
   .faq-label {
-    font-size: 9px; font-weight: 700;
-    color: var(--gray-300);
-    text-transform: uppercase; letter-spacing: 0.08em;
-    flex-shrink: 0; white-space: nowrap;
-    border-right: 1.5px solid var(--gray-100);
-    padding-right: 8px;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding-right: 10px;
+    border-right: 1px solid var(--hairline);
   }
 
   .faq-chip {
-    background: var(--gray-50);
-    border: 1.5px solid var(--gray-100);
-    border-radius: 20px;
-    padding: 5px 11px;
-    font-size: 12px; font-weight: 600;
-    color: var(--navy);
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    border-radius: 100px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
     cursor: pointer;
-    transition: all 0.15s ease;
     font-family: inherit;
-    white-space: nowrap; flex-shrink: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
     -webkit-appearance: none;
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--sh-1);
+    letter-spacing: 0.005em;
   }
 
-  .faq-chip:hover  { background: var(--navy); border-color: var(--navy); color: var(--white); }
-  .faq-chip:active { transform: scale(0.95); }
+  .faq-chip:hover {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20,34,79,0.18);
+  }
 
-  /* ── MESSAGES SCROLL AREA ── */
+  .faq-chip:active { transform: scale(0.96); }
+
+  /* ── MESSAGES ── */
   .chat-messages {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 14px 12px 8px;
+    padding: 18px 14px 12px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 14px;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     overscroll-behavior: contain;
+    background:
+      linear-gradient(180deg, var(--paper-warm) 0%, var(--cream) 100%);
+    position: relative;
   }
 
-  .chat-messages::-webkit-scrollbar { width: 3px; }
-  .chat-messages::-webkit-scrollbar-thumb { background: var(--gray-100); border-radius: 2px; }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(126,131,155,0.2);
+    border-radius: 2px;
+  }
 
-  /* Date divider */
+  /* Date divider — refined */
   .date-divider {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 10px; color: var(--gray-300); font-weight: 500;
-    flex-shrink: 0; margin-bottom: 2px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 10px;
+    color: var(--ink-faint);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    margin: 2px 0 6px;
   }
-  .date-divider::before,.date-divider::after {
-    content: ''; flex: 1; height: 1px; background: var(--gray-100);
+
+  .date-divider::before, .date-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--hairline) 50%, transparent);
   }
 
   /* ── BUBBLES ── */
   .msg-row {
-    display: flex; align-items: flex-end; gap: 7px;
-    animation: msgIn 0.22s ease-out;
+    display: flex; align-items: flex-end; gap: 8px;
+    animation: msgIn 0.32s cubic-bezier(0.16, 1, 0.3, 1);
     flex-shrink: 0;
   }
 
   @keyframes msgIn {
-    from { opacity: 0; transform: translateY(7px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
   .msg-row.user { flex-direction: row-reverse; }
 
   .msg-avatar {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    width: 28px; height: 28px; border-radius: 50%;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.2), transparent 50%),
+      linear-gradient(135deg, var(--gold-soft), var(--gold-deep));
     display: flex; align-items: center; justify-content: center;
-    font-size: 9px; font-weight: 700; color: var(--navy);
+    font-family: 'Fraunces', serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--navy-deep);
     flex-shrink: 0;
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.4),
+      0 2px 4px rgba(200,151,43,0.25);
+    letter-spacing: 0.02em;
   }
 
   .msg-content { max-width: 80%; display: flex; flex-direction: column; }
   .msg-row.user .msg-content { align-items: flex-end; }
 
   .msg-bubble {
-    padding: 10px 13px; border-radius: 16px;
-    font-size: 13.5px; line-height: 1.55;
+    padding: 11px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.55;
     word-break: break-word;
+    letter-spacing: -0.005em;
+    font-weight: 450;
   }
 
-  .msg-row.bot  .msg-bubble {
-    background: var(--white); color: var(--gray-700);
-    border-bottom-left-radius: 4px;
-    box-shadow: var(--shadow-sm); border: 1px solid var(--gray-100);
+  .msg-row.bot .msg-bubble {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--hairline);
+    border-bottom-left-radius: 6px;
+    box-shadow: var(--sh-1);
   }
 
   .msg-row.user .msg-bubble {
-    background: linear-gradient(135deg, var(--navy), var(--navy-light));
-    color: var(--white); border-bottom-right-radius: 4px;
-    box-shadow: var(--shadow-md);
+    background: linear-gradient(135deg, var(--navy-soft) 0%, var(--navy) 100%);
+    color: #FFFFFF;
+    border-bottom-right-radius: 6px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      var(--sh-2);
+    font-weight: 500;
+  }
+
+  .msg-bubble strong {
+    font-weight: 600;
+    color: inherit;
+  }
+
+  .msg-row.bot .msg-bubble strong { color: var(--navy); }
+
+  .msg-bubble a {
+    color: var(--gold-deep);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,151,43,0.4);
+    transition: border-color 0.15s;
+  }
+
+  .msg-bubble a:hover { border-bottom-color: var(--gold); }
+
+  .msg-row.user .msg-bubble a {
+    color: var(--gold-soft);
+    border-bottom-color: rgba(212,168,71,0.5);
   }
 
   .msg-time {
-    font-size: 10px; color: var(--gray-300);
-    margin-top: 3px; padding: 0 2px;
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    margin-top: 4px;
+    padding: 0 4px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+    font-weight: 450;
   }
 
   /* Initial greeting chips */
   .quick-replies-initial {
     display: flex; flex-wrap: wrap; gap: 7px;
-    padding-left: 33px;
-    animation: msgIn 0.3s ease-out 0.15s both;
+    padding-left: 36px;
+    animation: msgIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
     flex-shrink: 0;
   }
 
   .chip {
-    background: var(--white);
-    border: 1.5px solid var(--gold);
-    border-radius: 20px; padding: 6px 13px;
-    font-size: 12px; font-weight: 600;
-    color: var(--navy); cursor: pointer;
-    transition: all 0.15s; font-family: inherit;
+    background: var(--paper);
+    border: 1px solid rgba(200,151,43,0.35);
+    border-radius: 100px;
+    padding: 7px 14px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--navy);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--sh-1);
+    letter-spacing: -0.005em;
   }
 
-  .chip:hover  { background: var(--gold); color: var(--white); }
-  .chip:active { transform: scale(0.95); }
+  .chip:hover {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--gold-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(20,34,79,0.2);
+  }
+
+  .chip:active { transform: scale(0.96); }
 
   /* Typing indicator */
   .typing-row {
-    display: flex; align-items: flex-end; gap: 7px; flex-shrink: 0;
+    display: flex; align-items: flex-end; gap: 8px; flex-shrink: 0;
   }
 
   .typing-bubble {
-    background: var(--white); border: 1px solid var(--gray-100);
-    border-radius: 16px; border-bottom-left-radius: 4px;
-    padding: 12px 14px; box-shadow: var(--shadow-sm);
-    display: flex; gap: 4px; align-items: center;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    border-radius: 18px;
+    border-bottom-left-radius: 6px;
+    padding: 13px 15px;
+    box-shadow: var(--sh-1);
+    display: flex; gap: 5px; align-items: center;
   }
 
   .typing-dot {
     width: 6px; height: 6px; border-radius: 50%;
-    background: var(--gray-300);
-    animation: typingBounce 1.2s ease-in-out infinite;
+    background: var(--ink-faint);
+    animation: typingBounce 1.3s ease-in-out infinite;
   }
-  .typing-dot:nth-child(2) { animation-delay: 0.15s; }
-  .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+  .typing-dot:nth-child(2) { animation-delay: 0.18s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.36s; }
 
   @keyframes typingBounce {
-    0%,60%,100% { transform: translateY(0); background: var(--gray-300); }
-    30%          { transform: translateY(-5px); background: var(--gold); }
+    0%,60%,100% { transform: translateY(0); background: var(--ink-faint); }
+    30%         { transform: translateY(-5px); background: var(--gold); }
   }
 
-  /* ── WHATSAPP BUTTON ── */
+  /* ── WHATSAPP BUTTON — premium ── */
   .wa-wrap {
-    padding-left: 33px;
+    padding-left: 36px;
     flex-shrink: 0;
-    animation: msgIn 0.25s ease-out;
-    max-width: calc(80% + 33px);
+    animation: msgIn 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: calc(80% + 36px);
   }
 
   .wa-button {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 11px;
     width: 100%;
-    background: linear-gradient(135deg, var(--green-wa), var(--green-wa-dark));
-    color: var(--white); text-decoration: none;
-    border-radius: 12px; padding: 13px 16px;
-    font-size: 14px; font-weight: 700; font-family: inherit;
-    transition: opacity 0.15s, transform 0.15s;
-    box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.12), transparent 50%),
+      linear-gradient(135deg, var(--green-wa) 0%, var(--green-wa-2) 100%);
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: -0.005em;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.2),
+      0 1px 2px rgba(29,168,81,0.3),
+      0 8px 24px rgba(37,211,102,0.32);
+    border: none;
   }
 
-  .wa-button:active { opacity: 0.88; transform: scale(0.98); }
+  .wa-button:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.2),
+      0 1px 2px rgba(29,168,81,0.3),
+      0 12px 32px rgba(37,211,102,0.42);
+  }
 
+  .wa-button:active { transform: scale(0.98); }
   .wa-icon { width: 20px; height: 20px; fill: white; flex-shrink: 0; }
 
   /* ── INPUT AREA ── */
   .chat-input-area {
-    background: var(--white);
-    border-top: 1px solid var(--gray-100);
-    padding: 10px 12px;
-    padding-bottom: max(10px, env(safe-area-inset-bottom));
-    display: flex; align-items: flex-end; gap: 8px;
+    background: var(--paper);
+    border-top: 1px solid var(--hairline);
+    padding: 12px 14px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    display: flex; align-items: flex-end; gap: 10px;
     flex-shrink: 0;
+    position: relative;
+  }
+
+  /* Top hairline glow */
+  .chat-input-area::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 14px; right: 14px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--hairline) 20%, var(--hairline) 80%, transparent);
   }
 
   .input-wrap {
     flex: 1;
-    background: var(--gray-50);
-    border: 1.5px solid var(--gray-100);
-    border-radius: 20px;
+    background: var(--bone);
+    border: 1px solid var(--hairline);
+    border-radius: 22px;
     display: flex; align-items: center;
-    padding: 0 14px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    min-height: 42px;
+    padding: 0 16px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 44px;
   }
 
   .input-wrap:focus-within {
-    border-color: var(--gold); background: var(--white);
-    box-shadow: 0 0 0 3px rgba(200,151,43,0.08);
+    border-color: rgba(200,151,43,0.4);
+    background: var(--paper);
+    box-shadow:
+      0 0 0 3px rgba(200,151,43,0.08),
+      var(--sh-1);
   }
 
   #userInput {
     flex: 1; border: none; background: transparent;
-    padding: 10px 0; font-size: 14px; font-family: inherit;
-    color: var(--gray-700); outline: none; resize: none;
+    padding: 11px 0;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--ink);
+    outline: none; resize: none;
     max-height: 90px; line-height: 1.45;
     -webkit-appearance: none;
+    font-weight: 450;
+    letter-spacing: -0.005em;
   }
 
-  #userInput::placeholder { color: var(--gray-300); }
+  #userInput::placeholder {
+    color: var(--ink-faint);
+    font-weight: 450;
+  }
 
   .send-btn {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.18), transparent 50%),
+      linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 50%, var(--gold-deep) 100%);
     border: none; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(200,151,43,0.4);
-    transition: transform 0.12s;
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.4),
+      inset 0 -1px 1px rgba(0,0,0,0.08),
+      0 2px 4px rgba(200,151,43,0.25),
+      0 6px 16px rgba(200,151,43,0.3);
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .send-btn:active { transform: scale(0.9); }
-  .send-btn svg { width: 17px; height: 17px; fill: var(--navy); margin-left: 2px; }
+  .send-btn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.4),
+      inset 0 -1px 1px rgba(0,0,0,0.08),
+      0 2px 4px rgba(200,151,43,0.25),
+      0 10px 24px rgba(200,151,43,0.4);
+  }
 
-  /* ── POWERED BY ── */
+  .send-btn:active { transform: scale(0.92); }
+  .send-btn svg { width: 18px; height: 18px; fill: var(--navy-deep); margin-left: 2px; }
+
+  /* ── FOOTER ── */
   .powered-by {
-    text-align: center; font-size: 10px;
-    color: var(--gray-300); padding: 4px 0 6px;
-    background: var(--white); letter-spacing: 0.03em;
+    text-align: center;
+    font-size: 10px;
+    color: var(--ink-faint);
+    padding: 6px 0 8px;
+    background: var(--paper);
+    letter-spacing: 0.04em;
+    font-weight: 450;
     flex-shrink: 0;
+    border-top: 1px solid rgba(232,229,220,0.6);
   }
-  .powered-by span { color: var(--gold); font-weight: 600; }
+
+  .powered-by .brand {
+    color: var(--gold-deep);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .powered-by .dot {
+    color: var(--ink-faint);
+    margin: 0 6px;
+    opacity: 0.5;
+  }
 </style>
 </head>
 <body>
@@ -405,15 +673,22 @@
 
   <!-- HEADER -->
   <div class="chat-header">
-    <div class="avatar">BK<div class="avatar-pulse"></div></div>
+    <div class="header-orb"></div>
+    <div class="avatar">
+      BK
+      <div class="avatar-pulse"></div>
+    </div>
     <div class="header-info">
       <div class="header-name">Bot KPTM</div>
-      <div class="header-sub"><span class="status-dot"></span>Pembantu Digital KPTM Bangi</div>
+      <div class="header-sub">
+        <span class="status-dot"></span>
+        Pembantu Digital · Online
+      </div>
     </div>
     <div class="header-badge">AI</div>
   </div>
 
-  <!-- STICKY FAQ BAR — hidden until first reply -->
+  <!-- STICKY FAQ BAR -->
   <div class="faq-bar" id="faqBar">
     <span class="faq-label">FAQ</span>
     <button class="faq-chip" onclick="askFaq('Program yang ditawarkan')">📚 Program</button>
@@ -428,7 +703,7 @@
 
   <!-- MESSAGES -->
   <div class="chat-messages" id="chatMessages">
-    <div class="date-divider">Hari ini</div>
+    <div class="date-divider">Hari Ini</div>
   </div>
 
   <!-- INPUT -->
@@ -441,21 +716,25 @@
     </button>
   </div>
 
-  <div class="powered-by">Dikuasakan oleh <span>Stegg.dev</span> · AI oleh Gemma</div>
+  <div class="powered-by">
+    Dikuasakan oleh <span class="brand">Stegg.dev</span>
+    <span class="dot">·</span>
+    AI oleh Gemma
+  </div>
 
 </div>
 <script>
   // ── CONFIG ──
   const N8N_WEBHOOK  = 'https://n8n.stegg.dev/webhook/kptm-chat';
-  const AGENT_WA_NUM = '601XXXXXXXXX'; // ← replace with real number
+  const AGENT_WA_NUM = '601XXXXXXXXX';
   const TIMEOUT_MS   = 30000;
 
   // ── STATE ──
-  let sessionId          = 'ks_' + Math.random().toString(36).substr(2,9);
-  let unansweredCount    = 0;
-  let escalating         = false;
-  let isTyping           = false;
-  let faqBarShown        = false;
+  let sessionId       = 'ks_' + Math.random().toString(36).substr(2,9);
+  let unansweredCount = 0;
+  let escalating      = false;
+  let isTyping        = false;
+  let faqBarShown     = false;
 
   const SYSTEM_PROMPT = `Anda adalah "Bot KPTM", pembantu digital rasmi KPTM Bangi Kolej (Kolej Poly-Tech MARA Bangi).
 PERANAN: Bantu pelajar prospektif dengan soalan kemasukan dan program KPTM Bangi. Jawab dalam Bahasa Malaysia formal. Jangan jawab soalan tidak berkaitan atau sebut pesaing.
@@ -471,10 +750,9 @@ MAKLUMAT:
 - Cara mohon: bangi.kptm.edu.my → Pengambilan Pelajar → borang online
 - Asrama: Ada (lelaki/perempuan berasingan), WiFi, dewan makan
 - Kewangan: MARA EDULOAN, PTPTN, Zakat Selangor
-- Lokasi: KPTM Bangi, Selangor. Maps: https://share.google/qpcxd15QcH2ymoyuy
+- Lokasi: KPTM Bangi, Selangor.
 Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
 
-  // ── HELPERS ──
   const getTime = () => new Date().toLocaleTimeString('ms-MY',{hour:'2-digit',minute:'2-digit'});
 
   function esc(t) {
@@ -497,7 +775,6 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
     document.getElementById('faqBar').classList.add('visible');
   }
 
-  // ── RENDER ──
   function botMsg(html) {
     const msgs = document.getElementById('chatMessages');
     const row = document.createElement('div');
@@ -549,7 +826,6 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
     isTyping = false;
   }
 
-  // ── WHATSAPP ESCALATION ──
   function showWaButton(customMsg) {
     const msgs = document.getElementById('chatMessages');
     const encodedText = encodeURIComponent(
@@ -563,7 +839,7 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
         <svg class="wa-icon" viewBox="0 0 24 24">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
-        💬 Hubungi Agent WhatsApp
+        Hubungi Agent WhatsApp
       </a>`;
     msgs.appendChild(wrap);
     scrollBottom();
@@ -575,7 +851,7 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
     showWaButton();
     setTimeout(() => {
       escalating = false;
-      botMsg('Anda juga boleh teruskan bertanya di sini jika ada soalan lain. 😊');
+      botMsg('Anda juga boleh teruskan bertanya di sini jika ada soalan lain.');
       unansweredCount = 0;
     }, 900);
   }
@@ -586,7 +862,6 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
     return kw.some(k => lc.includes(k));
   }
 
-  // ── AI CALL ──
   async function callAI(message) {
     const ctrl = new AbortController();
     const tid  = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
@@ -607,36 +882,35 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
     }
   }
 
-  // ── DEMO RESPONSES ──
   function demoReply(msg) {
     const q = msg.toLowerCase();
 
     if (/program|kursus|diploma|sijil|bidang/.test(q))
-      return '📚 <strong>Program di KPTM Bangi:</strong><br><br>🎓 <strong>Diploma:</strong><br>• Pengurusan Perniagaan<br>• Perakaunan<br>• Teknologi Maklumat<br><br>📜 <strong>Sijil:</strong><br>• Pengurusan Perniagaan<br>• Perakaunan<br><br>Maklumat lanjut: <a href="https://bangi.kptm.edu.my" target="_blank" style="color:var(--gold);font-weight:600">bangi.kptm.edu.my</a>';
+      return '<strong>Program di KPTM Bangi:</strong><br><br>🎓 <strong>Diploma:</strong><br>• Pengurusan Perniagaan<br>• Perakaunan<br>• Teknologi Maklumat<br><br>📜 <strong>Sijil:</strong><br>• Pengurusan Perniagaan<br>• Perakaunan<br><br>Maklumat lanjut: <a href="https://bangi.kptm.edu.my" target="_blank">bangi.kptm.edu.my</a>';
 
     if (/syarat|kelayakan|kredit|spm/.test(q))
-      return '📋 <strong>Syarat Kemasukan:</strong><br><br><strong>Diploma:</strong><br>• SPM — min. 3 kredit (wajib BM & Matematik)<br>• Warganegara Malaysia<br><br><strong>Sijil:</strong><br>• Lulus SPM / PMR / PT3<br>• Syarat bergantung program';
+      return '<strong>Syarat Kemasukan:</strong><br><br><strong>Diploma:</strong><br>• SPM — minimum 3 kredit (wajib BM & Matematik)<br>• Warganegara Malaysia<br><br><strong>Sijil:</strong><br>• Lulus SPM / PMR / PT3<br>• Syarat bergantung program';
 
     if (/yuran|fee|bayar|kos|harga|rm/.test(q))
-      return '💰 <strong>Anggaran Yuran:</strong><br><br>• Diploma: <strong>RM 3,000–5,000</strong> / semester<br>• Sijil: <strong>RM 1,500–2,500</strong> / semester<br><br>Bantuan: MARA EDULOAN · PTPTN · Zakat<br><br>📞 Yuran tepat: <strong>+603-8744 3700</strong>';
+      return '<strong>Anggaran Yuran:</strong><br><br>• Diploma: <strong>RM 3,000–5,000</strong> / semester<br>• Sijil: <strong>RM 1,500–2,500</strong> / semester<br><br>Bantuan tersedia: MARA EDULOAN · PTPTN · Zakat<br><br>📞 Yuran tepat: <strong>+603-8744 3700</strong>';
 
     if (/mohon|daftar|apply|cara|pendaftaran|permohonan/.test(q))
-      return '📝 <strong>Cara Memohon:</strong><br><br>1️⃣ Layari <a href="https://bangi.kptm.edu.my" target="_blank" style="color:var(--gold);font-weight:600">bangi.kptm.edu.my</a><br>2️⃣ Klik <em>Pengambilan Pelajar</em><br>3️⃣ Isi borang online<br>4️⃣ Hantar dokumen<br>5️⃣ Tunggu tawaran / temuduga<br><br>📅 Intake: <strong>Mac</strong> & <strong>September</strong>';
+      return '<strong>Cara Memohon:</strong><br><br>1. Layari <a href="https://bangi.kptm.edu.my" target="_blank">bangi.kptm.edu.my</a><br>2. Klik <em>Pengambilan Pelajar</em><br>3. Isi borang online<br>4. Hantar dokumen<br>5. Tunggu tawaran / temuduga<br><br>📅 Intake: <strong>Mac</strong> & <strong>September</strong>';
 
     if (/intake|tarikh|bila|semester|mula/.test(q))
-      return '📅 <strong>Tarikh Intake:</strong><br><br>• <strong>Intake Mac</strong> — Semester 1<br>• <strong>Intake September</strong> — Semester 2<br><br>Pendaftaran dibuka <strong>2–3 bulan</strong> sebelum intake. Pantau <a href="https://bangi.kptm.edu.my" target="_blank" style="color:var(--gold)">laman web</a> untuk tarikh tepat.';
+      return '<strong>Tarikh Intake:</strong><br><br>• <strong>Intake Mac</strong> — Semester 1<br>• <strong>Intake September</strong> — Semester 2<br><br>Pendaftaran dibuka <strong>2–3 bulan</strong> sebelum intake. Pantau <a href="https://bangi.kptm.edu.my" target="_blank">laman web</a> untuk tarikh tepat.';
 
     if (/asrama|hostel|penginapan|tinggal|duduk/.test(q))
-      return '🏠 <strong>Kemudahan Asrama:</strong><br><br>✅ Berasingan — lelaki & perempuan<br>✅ WiFi & dewan makan<br>✅ Permohonan semasa daftar masuk<br><br>📞 Unit Penginapan: <strong>+603-8744 3700</strong>';
+      return '<strong>Kemudahan Asrama:</strong><br><br>✓ Berasingan — lelaki & perempuan<br>✓ WiFi & dewan makan<br>✓ Permohonan semasa daftar masuk<br><br>📞 Unit Penginapan: <strong>+603-8744 3700</strong>';
 
     if (/dokumen|bawa|senarai|keperluan|apa yang/.test(q))
-      return '📄 <strong>Dokumen Diperlukan:</strong><br><br>✅ Sijil SPM / keputusan peperiksaan<br>✅ IC pemohon<br>✅ IC ibu/bapa atau penjaga<br>✅ Sijil kelahiran<br>✅ Gambar pasport (2 keping)<br>✅ Borang permohonan lengkap';
+      return '<strong>Dokumen Diperlukan:</strong><br><br>✓ Sijil SPM / keputusan peperiksaan<br>✓ IC pemohon<br>✓ IC ibu/bapa atau penjaga<br>✓ Sijil kelahiran<br>✓ Gambar pasport (2 keping)<br>✓ Borang permohonan lengkap';
 
     if (/biasiswa|ptptn|mara|pinjaman|zakat|kewangan|bantuan|wang/.test(q))
-      return '💳 <strong>Bantuan Kewangan:</strong><br><br>• <strong>MARA EDULOAN</strong> (Bumiputera)<br><a href="https://myeduloan.mara.gov.my" target="_blank" style="color:var(--gold)">myeduloan.mara.gov.my</a><br><br>• <strong>PTPTN</strong><br><a href="https://www.ptptn.gov.my" target="_blank" style="color:var(--gold)">ptptn.gov.my</a><br><br>• <strong>Zakat Selangor</strong> — bagi yang layak';
+      return '<strong>Bantuan Kewangan:</strong><br><br>• <strong>MARA EDULOAN</strong> (Bumiputera)<br><a href="https://myeduloan.mara.gov.my" target="_blank">myeduloan.mara.gov.my</a><br><br>• <strong>PTPTN</strong><br><a href="https://www.ptptn.gov.my" target="_blank">ptptn.gov.my</a><br><br>• <strong>Zakat Selangor</strong> — bagi yang layak';
 
     if (/lokasi|mana|alamat|map|jalan|google|maps/.test(q))
-      return '📍 <strong>Lokasi KPTM Bangi:</strong><br><br>Kolej Poly-Tech MARA Bangi, Selangor<br>📞 +603-8744 3700<br>🕗 Isnin–Jumaat · 8pagi–5petang<br><br><a href="https://share.google/qpcxd15QcH2ymoyuy" target="_blank" style="color:var(--gold);font-weight:600">🗺️ Buka Google Maps</a>';
+      return '<strong>Lokasi KPTM Bangi:</strong><br><br>Kolej Poly-Tech MARA Bangi, Selangor<br>📞 +603-8744 3700<br>🕗 Isnin–Jumaat · 8pagi–5petang<br><br><a href="https://share.google/qpcxd15QcH2ymoyuy" target="_blank">Buka Google Maps →</a>';
 
     if (/terima kasih|tq|thanks|ok dah|selesai/.test(q))
       return 'Sama-sama! 😊 Semoga berjaya dalam permohonan ke KPTM Bangi. Ada soalan lain?';
@@ -644,7 +918,6 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
     if (/assalam|salam|hello|hai\b|hi\b/.test(q))
       return 'Waalaikumussalam! Selamat datang ke KPTM Bangi 😊 Ada yang boleh saya bantu hari ini?';
 
-    // Unknown
     unansweredCount++;
     if (unansweredCount >= 3) {
       unansweredCount = 0;
@@ -652,28 +925,24 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
       return 'Maaf, saya tidak mempunyai maklumat untuk soalan tersebut. Biarkan saya hubungkan anda dengan ejen kami.';
     }
 
-    return 'Maaf, saya tidak dapat menjawab soalan tersebut. Cuba tanya perkara lain, atau hubungi kami di <strong>+603-8744 3700</strong>. 😊';
+    return 'Maaf, saya tidak dapat menjawab soalan tersebut. Cuba tanya perkara lain, atau hubungi kami di <strong>+603-8744 3700</strong>.';
   }
 
-  // ── FAQ SHORTCUT ──
   function askFaq(topic) {
     if (escalating) return;
     sendUserMessage(topic);
   }
 
-  // ── MAIN SEND ──
   async function sendUserMessage(text) {
     text = text.trim();
     if (!text || isTyping) return;
 
-    // Remove greeting chips
     document.getElementById('initialChips')?.remove();
 
     userMsg(text);
     document.getElementById('userInput').value = '';
     document.getElementById('userInput').style.height = 'auto';
 
-    // Escalation keyword → direct WA
     if (isEscalationRequest(text)) {
       showTyping();
       await new Promise(r => setTimeout(r, 700));
@@ -682,7 +951,6 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
       return;
     }
 
-    // AI → fallback demo
     showTyping();
     const aiReply = await callAI(text);
     hideTyping();
@@ -706,7 +974,6 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
     sendUserMessage(document.getElementById('userInput').value);
   }
 
-  // ── INPUT EVENTS ──
   const inp = document.getElementById('userInput');
 
   inp.addEventListener('keydown', e => {
@@ -714,16 +981,12 @@ Jika tidak pasti, rujuk +603-8744 3700. Respons ringkas dan mesra.`;
   });
 
   inp.addEventListener('input', function() { autoResize(this); });
-
-  // iOS keyboard — scroll to bottom when keyboard opens
   inp.addEventListener('focus', () => setTimeout(scrollBottom, 400));
 
-  // ── INIT ──
   window.addEventListener('load', () => {
     setTimeout(() => {
       botMsg('Assalamualaikum! Saya <strong>Bot KPTM</strong>, pembantu digital KPTM Bangi Kolej. Boleh saya bantu anda hari ini? 😊');
 
-      // One-time greeting chips
       const msgs = document.getElementById('chatMessages');
       const wrap = document.createElement('div');
       wrap.className = 'quick-replies-initial';
